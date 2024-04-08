@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Lottie.asset(
           'assets/lottie/tenis.json',
+          repeat: false,
         ),
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/controllers/users_controller.dart';
 import 'package:flutter_sqlite/core/injector.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class FormData {
   String name;
@@ -77,6 +78,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           key: _formKey,
           child: Column(
             children: [
+              Lottie.asset(
+                "assets/lottie/register.json",
+                width: MediaQuery.of(context).size.width * 0.7,
+              ),
               TextFormField(
                 keyboardType: TextInputType.name,
                 textInputAction: TextInputAction.next,

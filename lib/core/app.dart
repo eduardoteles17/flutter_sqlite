@@ -8,7 +8,7 @@ abstract class App {
     final authController = getIt.get<AuthController>();
     final isAuthenticated = await authController.init();
 
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 5));
 
     return isAuthenticated;
   }

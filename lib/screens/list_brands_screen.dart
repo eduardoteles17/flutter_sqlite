@@ -5,6 +5,7 @@ import 'package:flutter_sqlite/core/injector.dart';
 import 'package:flutter_sqlite/models/brand_model.dart';
 import 'package:flutter_sqlite/widgets/drawer_widget.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 
 class ListBrandsScreen extends StatefulWidget {
   const ListBrandsScreen({super.key});
@@ -101,8 +102,13 @@ class _ListBrandsScreenState extends State<ListBrandsScreen> {
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height - 100,
-                  child: const Center(
-                    child: Text('Nenhuma marca cadastrada'),
+                  child:  Center(
+                    child: Column(
+                      children: [
+                        Lottie.asset("assets/lottie/nenhum-item.json"),
+                        Text('Nenhuma marca cadastrada'),
+                      ],
+                    ),
                   ),
                 ),
               );
