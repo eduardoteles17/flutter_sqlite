@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/core/injector.dart';
 
 import 'app.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  setupApp();
+
+  await getIt.allReady();
+
   runApp(const App());
 }
 
