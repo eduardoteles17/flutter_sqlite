@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sqlite/controllers/auth_controller.dart';
+import 'package:flutter_sqlite/core/injector.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -10,7 +13,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  AuthController authController = getIt.get();
+
   int _counter = 0;
+
+
+  void _logout() async {
+    await authController.logout();
+    if (!context.mounted) {
+      return;
+    }
+    GoRouter.of(context).go('/login');
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -31,6 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ElevatedButton(
+              onPressed: _logout,
+              child: const Text('Logout'),
             ),
           ],
         ),

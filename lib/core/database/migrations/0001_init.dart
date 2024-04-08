@@ -6,6 +6,7 @@ void migration0001Init(Batch batch) async {
     CREATE TABLE users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL,
+      email TEXT NOT NULL,
       passwordHash TEXT NOT NULL
     )
   ''');

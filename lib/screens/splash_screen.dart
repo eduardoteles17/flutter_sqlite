@@ -14,8 +14,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    App.init().then((value) {
-      GoRouter.of(context).replace("/home");
+    App.init().then((isAuthenticated) {
+      if (isAuthenticated) {
+        GoRouter.of(context).go("/home");
+      } else {
+        GoRouter.of(context).go("/login");
+      }
     });
   }
 

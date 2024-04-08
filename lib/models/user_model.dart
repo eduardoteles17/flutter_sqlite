@@ -1,11 +1,13 @@
 class User {
   final int id;
   final String name;
+  final String email;
   final String passwordHash;
 
   User({
     required this.id,
     required this.name,
+    required this.email,
     required this.passwordHash,
   });
 
@@ -13,6 +15,7 @@ class User {
     return User(
       id: map['id'],
       name: map['name'],
+      email: map['email'],
       passwordHash: map['passwordHash'],
     );
   }
@@ -21,6 +24,7 @@ class User {
     return {
       'id': id,
       'name': name,
+      'email': email,
       'passwordHash': passwordHash,
     };
   }
