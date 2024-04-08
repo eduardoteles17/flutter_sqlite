@@ -1,3 +1,5 @@
+import 'package:flutter_sqlite/models/brand_model.dart';
+import 'package:flutter_sqlite/screens/edit_brand_screen.dart';
 import 'package:flutter_sqlite/screens/list_brands_screen.dart';
 import 'package:flutter_sqlite/screens/list_tenis_screen.dart';
 import 'package:flutter_sqlite/screens/list_users_screen.dart';
@@ -29,27 +31,40 @@ final appRoutes = GoRouter(
     ),
     GoRoute(
       path: "/brands",
-      pageBuilder: sharedAxisTransitionBuilder(const ListBrandsScreen()),
+      pageBuilder: sharedAxisTransitionBuilder(
+          (context, state) => const ListBrandsScreen()),
       routes: [
         GoRoute(
           path: "new",
-          pageBuilder: sharedAxisTransitionBuilder(const NewBrandScreen()),
+          pageBuilder: sharedAxisTransitionBuilder(
+              (context, state) => const NewBrandScreen()),
         ),
+        GoRoute(
+          path: "edit",
+          pageBuilder: sharedAxisTransitionBuilder(
+            (context, state) => EditBrandScreen(
+              brand: state.extra as Brand,
+            ),
+          ),
+        )
       ],
     ),
     GoRoute(
       path: "/tenis",
-      pageBuilder: sharedAxisTransitionBuilder(const ListTenisScreen()),
+      pageBuilder: sharedAxisTransitionBuilder(
+          (context, state) => const ListTenisScreen()),
       routes: [
         GoRoute(
           path: "new",
-          pageBuilder: sharedAxisTransitionBuilder(const NewTenisScreen()),
+          pageBuilder: sharedAxisTransitionBuilder(
+              (context, state) => const NewTenisScreen()),
         ),
       ],
     ),
     GoRoute(
       path: "/users",
-      pageBuilder: sharedAxisTransitionBuilder(const ListUsersScreen()),
+      pageBuilder: sharedAxisTransitionBuilder(
+          (context, state) => const ListUsersScreen()),
     )
   ],
 );

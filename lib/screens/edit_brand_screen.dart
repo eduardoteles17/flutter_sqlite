@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/controllers/brands_controller.dart';
 import 'package:flutter_sqlite/core/injector.dart';
+import 'package:flutter_sqlite/models/brand_model.dart';
 import 'package:go_router/go_router.dart';
 
 class FormData {
@@ -11,28 +12,34 @@ class FormData {
   });
 }
 
-class NewBrandScreen extends StatefulWidget {
-  const NewBrandScreen({super.key});
+class EditBrandScreen extends StatefulWidget {
+  final Brand brand;
+
+  const EditBrandScreen({
+    super.key,
+    required this.brand,
+  });
 
   @override
-  State<NewBrandScreen> createState() => _NewBrandScreenState();
+  State<EditBrandScreen> createState() => _EditBrandScreenState();
 }
 
-class _NewBrandScreenState extends State<NewBrandScreen> {
+class _EditBrandScreenState extends State<EditBrandScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final BrandsController _brandsController = getIt.get<BrandsController>();
+  final BrandsController _brandController = getIt.get<BrandsController>();
 
   final FormData _formData = FormData();
 
-  Future<void> _onSubmit() async {
+  _onSubmit() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
     _formKey.currentState!.save();
 
-    await _brandsController.createBrand(
+    await _brandController.updateBrand(
+      id: widget.brand.id,
       name: _formData.name,
     );
 
@@ -44,10 +51,16 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
   }
 
   @override
+  void initState() {
+    _formData.name = widget.brand.name;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nova Marca'),
+        title: Text(widget.brand.name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -56,13 +69,14 @@ class _NewBrandScreenState extends State<NewBrandScreen> {
           child: Column(
             children: [
               TextFormField(
+                initialValue: _formData.name,
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
                 onSaved: (value) => _formData.name = value!,
                 onFieldSubmitted: (_) => _onSubmit(),
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
+                  if (value!.isEmpty) {
                     return 'Campo obrigatório';
                   }
 
