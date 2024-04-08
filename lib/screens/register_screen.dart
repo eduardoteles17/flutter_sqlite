@@ -72,64 +72,66 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: const Text('Register'),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Lottie.asset(
-                "assets/lottie/register.json",
-                width: MediaQuery.of(context).size.width * 0.7,
-              ),
-              TextFormField(
-                keyboardType: TextInputType.name,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(labelText: 'Nome'),
-                onSaved: (value) => _formData.name = value!,
-                // onFieldSubmitted: (_) => _emailFocus.requestFocus(),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Nome é obrigatório';
-                  }
-
-                  return null;
-                },
-              ),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                textInputAction: TextInputAction.next,
-                decoration: const InputDecoration(labelText: 'Email'),
-                onSaved: (value) => _formData.email = value!,
-                // onFieldSubmitted: (_) => _passwordFocus.requestFocus(),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Email é obrigatório';
-                  }
-
-                  return null;
-                },
-              ),
-              TextFormField(
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(labelText: 'Senha'),
-                onSaved: (value) => _formData.password = value!,
-                onFieldSubmitted: (_) => _onSubmit(),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Senha é obrigatória';
-                  }
-
-                  return null;
-                },
-              ),
-              ElevatedButton(
-                onPressed: _onSubmit,
-                child: const Text('Register'),
-              ),
-            ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Lottie.asset(
+                  "assets/lottie/register.json",
+                  width: MediaQuery.of(context).size.width * 0.7,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(labelText: 'Nome'),
+                  onSaved: (value) => _formData.name = value!,
+                  // onFieldSubmitted: (_) => _emailFocus.requestFocus(),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Nome é obrigatório';
+                    }
+        
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(labelText: 'Email'),
+                  onSaved: (value) => _formData.email = value!,
+                  // onFieldSubmitted: (_) => _passwordFocus.requestFocus(),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Email é obrigatório';
+                    }
+        
+                    return null;
+                  },
+                ),
+                TextFormField(
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  textInputAction: TextInputAction.done,
+                  decoration: const InputDecoration(labelText: 'Senha'),
+                  onSaved: (value) => _formData.password = value!,
+                  onFieldSubmitted: (_) => _onSubmit(),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Senha é obrigatória';
+                    }
+        
+                    return null;
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: _onSubmit,
+                  child: const Text('Register'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
