@@ -8,8 +8,6 @@ void main() async {
 
   setupApp();
 
-  await getIt.allReady();
-
   runApp(const App());
 }
 
