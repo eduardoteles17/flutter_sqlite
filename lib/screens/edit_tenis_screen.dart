@@ -1,29 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_sqlite/controllers/tenis_controller.dart';
 import 'package:flutter_sqlite/core/injector.dart';
+import 'package:flutter_sqlite/models/tenis_model.dart';
 import 'package:flutter_sqlite/utils/autocomplete_brand.dart';
 import 'package:go_router/go_router.dart';
 
 class FormData {
-  int brandId;
+  String brandId;
   String name;
   String color;
 
   FormData({
     this.name = '',
-    this.brandId = 0,
+    this.brandId = '',
     this.color = '',
   });
 }
 
-class NewTenisScreen extends StatefulWidget {
-  const NewTenisScreen({super.key});
+class EditTenisScreen extends StatefulWidget {
+  final TenisWithBrand tenis;
+
+  const EditTenisScreen({
+    super.key,
+    required this.tenis,
+  });
 
   @override
-  State<NewTenisScreen> createState() => _NewTenisScreenState();
+  State<EditTenisScreen> createState() => _EditTenisScreenState();
 }
 
-class _NewTenisScreenState extends State<NewTenisScreen> {
+class _EditTenisScreenState extends State<EditTenisScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TenisController _tenisController = getIt.get<TenisController>();
@@ -46,9 +52,10 @@ class _NewTenisScreenState extends State<NewTenisScreen> {
     }
 
     // Save the tenis
-    _tenisController.createTenis(
+    _tenisController.updateTenis(
+      id: widget.tenis.id,
       name: _formData.name,
-      brandId: _formData.brandId,
+      brandId: int.parse(_formData.brandId),
       color: _formData.color,
     );
 
@@ -59,15 +66,21 @@ class _NewTenisScreenState extends State<NewTenisScreen> {
     );
 
     GoRouter.of(context).pop();
-
   }
 
+  @override
+  void initState() {
+    _formData.brandId = widget.tenis.brand.name;
+    _formData.name = widget.tenis.name;
+    _formData.color = widget.tenis.color;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Novo Tênis'),
+        title: Text(widget.tenis.name),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -80,13 +93,17 @@ class _NewTenisScreenState extends State<NewTenisScreen> {
                 children: [
                   const Text("Marca"),
                   AutoCompleteBrand(
+                    initialValue: TextEditingValue(
+                      text: widget.tenis.brand.name,
+                    ),
                     onSelected: (int brandId) {
-                      _formData.brandId = brandId;
+                      _formData.brandId = brandId.toString();
                     },
                   ),
                 ],
               ),
               TextFormField(
+                initialValue: widget.tenis.name,
                 decoration: const InputDecoration(
                   labelText: 'Nome',
                 ),
@@ -101,6 +118,7 @@ class _NewTenisScreenState extends State<NewTenisScreen> {
                 },
               ),
               TextFormField(
+                initialValue: widget.tenis.color,
                 decoration: const InputDecoration(
                   labelText: 'Cor',
                 ),
@@ -115,7 +133,7 @@ class _NewTenisScreenState extends State<NewTenisScreen> {
                 },
               ),
               ElevatedButton(
-                onPressed:_onSubmit,
+                onPressed: _onSubmit,
                 child: const Text('Salvar'),
               ),
             ],

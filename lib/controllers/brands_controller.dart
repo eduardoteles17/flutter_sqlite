@@ -21,6 +21,34 @@ class BrandsController {
     return Brand.fromMap(result.first);
   }
 
+  Future<Brand?> findBrandByName(String name) async {
+    final userId = _authController.user.id;
+
+    final List<Map<String, dynamic>> result = await _db.query(
+      'marcas',
+      where: 'name = ? AND user_id = ?',
+      whereArgs: [name, userId],
+    );
+
+    if (result.isEmpty) {
+      return null;
+    }
+
+    return Brand.fromMap(result.first);
+  }
+
+  Future<List<Brand>> findManyBrandsByName(String name) async {
+    final userId = _authController.user.id;
+
+    final List<Map<String, dynamic>> result = await _db.query(
+      'marcas',
+      where: 'name LIKE ? AND user_id = ?',
+      whereArgs: ['%$name%', userId],
+    );
+
+    return result.map((e) => Brand.fromMap(e)).toList();
+  }
+
   Future<List<Brand>> findAllBrands() async {
     final userId = _authController.user.id;
 
