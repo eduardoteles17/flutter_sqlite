@@ -61,4 +61,18 @@ class UserController {
 
     return User.fromMap(result.first);
   }
+
+  Future<List<User>> getAllUsers() async {
+    final List<Map<String, dynamic>> result = await _db.query('users');
+
+    return result.map((e) => User.fromMap(e)).toList();
+  }
+
+  Future<void> deleteUser(int id) async {
+    await _db.delete(
+      'users',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }
