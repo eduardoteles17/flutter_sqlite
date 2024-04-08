@@ -70,7 +70,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           selectedIcon: Icon(Icons.business),
         ),
         const NavigationDrawerDestination(
-          label: Text('Tenês'),
+          label: Text('Tenis'),
           icon: Icon(Icons.category_outlined),
           selectedIcon: Icon(Icons.category),
         ),
